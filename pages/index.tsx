@@ -9,6 +9,7 @@ import {
   Text,
 } from "@nextui-org/react";
 import type { NextPage } from "next";
+import { CloseSquare, Delete, Document, TickSquare } from "react-iconly";
 import { Navbar } from "../components/navbar";
 
 const Home: NextPage = () => {
@@ -17,7 +18,10 @@ const Home: NextPage = () => {
       <Navbar />
       <Card>
         <Card.Header>
-          <Text h3>Todo List App</Text>
+          <Text h3>
+            <Document set="bold" size="small" primaryColor="blueviolet" /> ToDo
+            List App
+          </Text>
         </Card.Header>
         <Card.Body>
           <Row fluid align="center">
@@ -35,21 +39,63 @@ const Home: NextPage = () => {
           </Row>
           <Row css={{ marginTop: 10 }}>
             <Col>
-              <Row>
-                <Col css={{ flexGrow: 1 }}>Add tRPC</Col>
+              <Row align="center">
+                <Col css={{ flexGrow: 1 }}>
+                  <Text>Add tRPC</Text>
+                </Col>
                 <Col css={{ display: "block", width: "auto" }}>
-                  <Button rounded auto ghost color="success">
+                  <Button
+                    icon={<TickSquare set="light" />}
+                    size="sm"
+                    rounded
+                    auto
+                    ghost
+                    color="success"
+                  >
                     Done
                   </Button>
                 </Col>
                 <Col css={{ display: "block", width: "auto", marginLeft: 5 }}>
-                  <Button rounded auto ghost color="warning">
+                  <Button
+                    icon={<Delete set="light" />}
+                    size="sm"
+                    rounded
+                    auto
+                    ghost
+                    color="error"
+                  >
                     Remove
                   </Button>
                 </Col>
               </Row>
-              <Row>
-                <Col>Add NextUI</Col>
+              <Row align="center" css={{ marginTop: 10 }}>
+                <Col>
+                  <Text del>Add NextUI</Text>
+                </Col>
+                <Col css={{ display: "block", width: "auto" }}>
+                  <Button
+                    icon={<CloseSquare set="light" />}
+                    size="sm"
+                    rounded
+                    auto
+                    ghost
+                    color="warning"
+                  >
+                    Not Done
+                  </Button>
+                </Col>
+                <Col css={{ display: "block", width: "auto", marginLeft: 5 }}>
+                  <Button
+                    icon={<Delete set="light" />}
+                    size="sm"
+                    rounded
+                    auto
+                    ghost
+                    color="error"
+                  >
+                    Remove
+                  </Button>
+                </Col>
               </Row>
             </Col>
           </Row>
