@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 
 const Navbar = () => {
   return (
-    <StyledNavMainContainer id="navbar-container">
+    <StyledNavMainContainer>
       <StyledNavContainer detached={false} showBlur={true}>
         <Container
           lg={true}

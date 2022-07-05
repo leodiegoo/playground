@@ -11,8 +11,15 @@ import {
 import type { NextPage } from "next";
 import { CloseSquare, Delete, Document, TickSquare } from "react-iconly";
 import { Navbar } from "../components/navbar";
+import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
+  const { data, isLoading } = trpc.useQuery([
+    "example.hello",
+    {
+      text: "from tRPC",
+    },
+  ]);
   return (
     <Container sm>
       <Navbar />
@@ -24,6 +31,9 @@ const Home: NextPage = () => {
           </Text>
         </Card.Header>
         <Card.Body>
+          <Row>
+            <Text>{data ? data.greeting : "Loading..."}</Text>
+          </Row>
           <Row fluid align="center">
             <Input
               css={{ marginRight: 5 }}
