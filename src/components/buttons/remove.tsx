@@ -24,7 +24,6 @@ const RemoveButton: FC<RemoveButton> = ({ taskId }) => {
   return (
     <Button
       onClick={handleRemoveClick}
-      icon={<Delete set="light" />}
       size="sm"
       rounded
       auto
@@ -35,7 +34,7 @@ const RemoveButton: FC<RemoveButton> = ({ taskId }) => {
       {removeMutation.isLoading ? (
         <Loading color="currentColor" size="sm" />
       ) : (
-        "Remove"
+        <Delete set="light" />
       )}
     </Button>
   );

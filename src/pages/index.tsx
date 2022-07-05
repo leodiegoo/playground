@@ -47,8 +47,12 @@ const Home: NextPage = () => {
       <Card>
         <Card.Header>
           <Text h3>
-            <Document set="bold" size="small" primaryColor="blueviolet" /> ToDo
-            List App
+            {isLoading ? (
+              <Loading color="currentColor" size="xs" />
+            ) : (
+              <Document set="bold" size="small" primaryColor="blueviolet" />
+            )}
+            ToDoList App
           </Text>
         </Card.Header>
         <Card.Body>

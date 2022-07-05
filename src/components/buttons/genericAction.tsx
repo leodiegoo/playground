@@ -27,25 +27,21 @@ const GenericActionButton: FC<GenericActionButton> = ({ taskId, done }) => {
     [key: string]: {
       icon: ReactNode;
       color: NormalColors;
-      text: string;
     };
   } = {
     false: {
       icon: <TickSquare set="light" />,
       color: "success",
-      text: "Done",
     },
     true: {
       icon: <CloseSquare set="light" />,
       color: "warning",
-      text: "Not Done",
     },
   };
 
   return (
     <Button
       onClick={handleClickToggle}
-      icon={generic[done ? "true" : "false"].icon}
       size="sm"
       rounded
       auto
@@ -56,7 +52,7 @@ const GenericActionButton: FC<GenericActionButton> = ({ taskId, done }) => {
       {toggleMutation.isLoading ? (
         <Loading color="currentColor" size="sm" />
       ) : (
-        generic[done ? "true" : "false"].text
+        generic[done ? "true" : "false"].icon
       )}
     </Button>
   );
