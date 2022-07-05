@@ -1,4 +1,6 @@
 import { withTRPC } from "@trpc/next";
+import { loggerLink } from "@trpc/client/links/loggerLink";
+import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import type { AppProps } from "next/app";
 import type { AppRouter } from "../server/router";
 import { NextUIProvider } from "@nextui-org/react";
@@ -33,6 +35,18 @@ export default withTRPC<AppRouter>({
     const url = `${getBaseUrl()}/api/trpc`;
 
     return {
+      /**
+       * @link https://trpc.io/docs/links
+       */
+      links: [
+        // adds pretty logs to your console in development and log erros in production
+        loggerLink({
+          enabled: (opts) =>
+            process.env.NODE_ENV === "development" ||
+            (opts.direction === "down" && opts.result instanceof Error),
+        }),
+        httpBatchLink({ url }),
+      ],
       url,
       transformer: superjson,
       /**
