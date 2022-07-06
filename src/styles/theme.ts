@@ -4,4 +4,10 @@ const darkTheme = createTheme({
   type: "dark",
 });
 
-export { darkTheme };
+const lightTheme = createTheme({
+  type: "light",
+});
+
+
+
+export { darkTheme, lightTheme };

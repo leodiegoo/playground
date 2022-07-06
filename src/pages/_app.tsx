@@ -1,12 +1,15 @@
+import type { AppRouter } from "../server/router";
+import type { AppProps } from "next/app";
+
 import { withTRPC } from "@trpc/next";
 import { loggerLink } from "@trpc/client/links/loggerLink";
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
-import type { AppProps } from "next/app";
-import type { AppRouter } from "../server/router";
 import { NextUIProvider } from "@nextui-org/react";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
+
 import superjson from "superjson";
 
-import { darkTheme } from "../styles/theme";
+import { darkTheme, lightTheme } from "../styles/theme";
 
 const getBaseUrl = () => {
   if (typeof window !== "undefined") {
@@ -20,9 +23,18 @@ const getBaseUrl = () => {
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <NextUIProvider theme={darkTheme}>
-      <Component {...pageProps} />
-    </NextUIProvider>
+    <NextThemesProvider
+      defaultTheme="system"
+      attribute="class"
+      value={{
+        light: lightTheme.className,
+        dark: darkTheme.className,
+      }}
+    >
+      <NextUIProvider theme={darkTheme}>
+        <Component {...pageProps} />
+      </NextUIProvider>
+    </NextThemesProvider>
   );
 }
 
