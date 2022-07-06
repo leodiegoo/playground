@@ -10,6 +10,8 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import superjson from "superjson";
 
 import { darkTheme, lightTheme } from "../styles/theme";
+import { SessionProvider } from "next-auth/react";
+import { AppType } from "next/dist/shared/lib/utils";
 
 const getBaseUrl = () => {
   if (typeof window !== "undefined") {
@@ -21,7 +23,10 @@ const getBaseUrl = () => {
   return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
 };
 
-function MyApp({ Component, pageProps }: AppProps) {
+const MyApp: AppType = ({
+  Component,
+  pageProps: { session, ...pageProps },
+}) => {
   return (
     <NextThemesProvider
       defaultTheme="system"
@@ -32,11 +37,13 @@ function MyApp({ Component, pageProps }: AppProps) {
       }}
     >
       <NextUIProvider theme={darkTheme}>
-        <Component {...pageProps} />
+        <SessionProvider session={session}>
+          <Component {...pageProps} />
+        </SessionProvider>
       </NextUIProvider>
     </NextThemesProvider>
   );
-}
+};
 
 export default withTRPC<AppRouter>({
   config({ ctx }) {

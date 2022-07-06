@@ -11,6 +11,7 @@ import {
   Text,
 } from "@nextui-org/react";
 import type { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import { FormEvent, useState } from "react";
 import { CloseSquare, Delete, Document, TickSquare } from "react-iconly";
 import { GenericActionButton } from "../components/buttons/genericAction";
@@ -27,6 +28,8 @@ const Home: NextPage = () => {
       setTaskDescription("");
     },
   });
+
+  const { data: session } = useSession();
 
   const [taskDescription, setTaskDescription] = useState("");
 

@@ -24,6 +24,7 @@ export const taskRouter = createRouter()
       return await ctx.prisma.tasks.create({
         data: {
           description: input.description,
+          userId: ctx.session?.user?.id,
         },
       });
     },
