@@ -4,11 +4,16 @@ import { createRouter } from "./context";
 export const taskRouter = createRouter()
   .query("getAll", {
     async resolve({ ctx }) {
-      return await ctx.prisma.tasks.findMany({
+      const result = await ctx.prisma.tasks.findMany({
         orderBy: {
           createdAt: "asc",
         },
+        include: {
+          user: true,
+        },
       });
+      console.log("opas");
+      return result;
     },
   })
   .mutation("add", {

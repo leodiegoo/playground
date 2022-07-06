@@ -13,7 +13,7 @@ import {
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { FormEvent, useState } from "react";
-import { CloseSquare, Delete, Document, TickSquare } from "react-iconly";
+import { CloseSquare, Delete, Document, TickSquare, User } from "react-iconly";
 import { GenericActionButton } from "../components/buttons/genericAction";
 import { RemoveButton } from "../components/buttons/remove";
 import { Navbar } from "../components/navbar";
@@ -99,6 +99,14 @@ const Home: NextPage = () => {
                       <Row align="center">
                         <Col css={{ flexGrow: 1 }}>
                           <Text del={task.done}>{task.description}</Text>
+                          {task.user && (
+                            <Row>
+                              <Text small color="secondary" weight="semibold">
+                                @{task.user.name}{" "}
+                                {task.createdAt.toLocaleDateString()}
+                              </Text>
+                            </Row>
+                          )}
                         </Col>
                         <Col css={{ display: "block", width: "auto" }}>
                           <GenericActionButton
