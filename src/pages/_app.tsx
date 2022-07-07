@@ -12,6 +12,9 @@ import superjson from "superjson";
 import { darkTheme, lightTheme } from "../styles/theme";
 import { SessionProvider } from "next-auth/react";
 import { AppType } from "next/dist/shared/lib/utils";
+import { Toaster } from "react-hot-toast";
+import { useTheme } from "@nextui-org/react";
+import { useTheme as useNextTheme } from "next-themes";
 
 const getBaseUrl = () => {
   if (typeof window !== "undefined") {
@@ -27,6 +30,9 @@ const MyApp: AppType = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  const { isDark, type: themeType } = useTheme();
+  const { theme, systemTheme } = useNextTheme();
+  console.log({ theme, systemTheme, isDark, themeType });
   return (
     <NextThemesProvider
       defaultTheme="system"
@@ -36,8 +42,15 @@ const MyApp: AppType = ({
         dark: darkTheme.className,
       }}
     >
-      <NextUIProvider theme={darkTheme}>
+      <NextUIProvider>
         <SessionProvider session={session}>
+          <Toaster
+            toastOptions={{
+              style: {
+                zIndex: 3,
+              },
+            }}
+          />
           <Component {...pageProps} />
         </SessionProvider>
       </NextUIProvider>

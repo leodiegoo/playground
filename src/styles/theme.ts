@@ -8,6 +8,4 @@ const lightTheme = createTheme({
   type: "light",
 });
 
-
-
 export { darkTheme, lightTheme };

@@ -3,6 +3,9 @@ import { FC, ReactNode } from "react";
 import { CloseSquare, TickSquare } from "react-iconly";
 import { trpc } from "../../utils/trpc";
 
+import toast from "react-hot-toast";
+import { TRPCClientError } from "@trpc/client";
+
 type GenericActionButton = {
   taskId: number;
   done: boolean;
@@ -16,11 +19,18 @@ const GenericActionButton: FC<GenericActionButton> = ({ taskId, done }) => {
     },
   });
 
-  const handleClickToggle = () => {
-    toggleMutation.mutateAsync({
-      done: !done,
-      id: taskId,
-    });
+  const handleClickToggle = async () => {
+    try {
+      await toggleMutation.mutateAsync({
+        done: !done,
+        id: taskId,
+      });
+    } catch (error) {
+      if (error instanceof TRPCClientError) {
+        toast.error(error.message);
+      }
+      console.log({ error });
+    }
   };
 
   const generic: {

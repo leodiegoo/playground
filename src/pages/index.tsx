@@ -21,11 +21,16 @@ import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
   const utils = trpc.useContext();
+
   const { data, isLoading } = trpc.useQuery(["task.getAll"]);
+
   const addTask = trpc.useMutation(["task.add"], {
     async onSuccess() {
       await utils.invalidateQueries(["task.getAll"]);
       setTaskDescription("");
+    },
+    onError(error, variables, context) {
+      console.error(error, variables, context);
     },
   });
 

@@ -5,7 +5,7 @@ export const StyledNavMainContainer = styled("nav", {
   height: "76px",
   position: "sticky",
   background: "transparent",
-  zIndex: "$max",
+  zIndex: "2",
 });
 
 export const StyledNavContainer = styled("div", {

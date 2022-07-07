@@ -1,3 +1,4 @@
+import * as trpc from "@trpc/server";
 import { z } from "zod";
 import { createRouter } from "./context";
 
@@ -12,7 +13,6 @@ export const taskRouter = createRouter()
           user: true,
         },
       });
-      console.log("opas");
       return result;
     },
   })
@@ -40,6 +40,45 @@ export const taskRouter = createRouter()
       done: z.boolean(),
     }),
     async resolve({ ctx, input }) {
+      const exist = await ctx.prisma.tasks.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+
+      if (!exist) {
+        throw new trpc.TRPCError({
+          code: "NOT_FOUND",
+          message: "Taskt not found.",
+        });
+      }
+
+      if (exist.userId) {
+        if (!ctx.session?.user.id) {
+          throw new trpc.TRPCError({
+            code: "UNAUTHORIZED",
+            message: "You are not authorized to update this task.",
+          });
+        }
+
+        if (exist.userId !== ctx.session?.user.id) {
+          throw new trpc.TRPCError({
+            code: "FORBIDDEN",
+            message: "You are not allowed to edit this task.",
+          });
+        }
+
+        return await ctx.prisma.tasks.updateMany({
+          where: {
+            id: input.id,
+            userId: ctx.session?.user?.id,
+          },
+          data: {
+            done: input.done,
+          },
+        });
+      }
+
       return await ctx.prisma.tasks.update({
         where: {
           id: input.id,
